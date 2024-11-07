@@ -1,17 +1,17 @@
 const Login = () => {
   return (
-    <div className="max-w-md sm:max-w-lg md:max-w-xl lg:max-w-lg p-4 bg-white rounded-[30px] shadow-md">
-      <div className="space-y-7 sm:pt-6 md:pt-8">
+    <div className="bg-white max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg px-6 py-8 sm:p-4 rounded-[30px] shadow-md">
+      <div className="space-y-2 sm:space-y-4 sm:pt-6 md:pt-8">
         <div className="flex justify-center items-center space-x-2 hover:scale-105 hover:-rotate-1 transition duration-500">
-          <img className="w-8 h-8" src="../../public/task_logo.png" />
-          <h5 className="text-3xl font-bold text-gray-900">Voca Task</h5>
+          <img className="w-6 h-6 sm:w-8 sm:h-8" src="../../public/task_logo.png" />
+          <h5 className="text-2xl sm:text-3xl font-bold text-gray-900">Voca Task</h5>
         </div>
         <div className="space-y-1 flex flex-col justify-center text-center ">
-          <p className="text-lg font-semibold text-gray-900 hover:scale-105 transition duration-500">Selamat datang di Voca Task!</p>
-          <p className="text-sm font-normal text-gray-900 hover:scale-105 transition duration-500">Aplikasi serba praktis yang siap bantuin semua kebutuhanmu, kapanpun, dan dimanapun.</p>
+          <p className="text-md sm:text-lg font-semibold text-gray-900 hover:scale-105 transition duration-500">Selamat datang di Voca Task!</p>
+          <p className="text-xs sm:text-sm font-normal text-gray-600 hover:scale-105 transition duration-500">Aplikasi Todo Task yang praktis dan efisien, siap membantu mengelola semua tugas dan kebutuhanmu kapan pun.</p>
         </div>
       </div>
-      <form className="space-y-6 sm:p-2 md:p-4 sm:mt-2 md:mt-4" action="#">
+      <form className="space-y-6 sm:p-2 md:p-4 mt-5 sm:mt-2" action="#">
         <div>
           <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
             Masukkan Email
