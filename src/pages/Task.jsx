@@ -1,9 +1,5 @@
-import React from 'react'
-
 const Task = () => {
-  return (
-    <div>Task Page Here</div>
-  )
-}
+  return <div>Task Page Here</div>;
+};
 
-export default Task
+export default Task;
