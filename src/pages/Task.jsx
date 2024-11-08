@@ -1,4 +1,12 @@
 const Task = () => {
+  const tasks = [
+    { id: 1, description: 'To study React fundamentals', done: false },
+    { id: 2, description: 'Write documentation for API endpoints', done: false },
+    { id: 3, description: 'Prepare a presentation on project status', done: false },
+    { id: 4, description: 'Fix bugs in the authentication module', done: false },
+    { id: 5, description: 'To study React fundamentals', done: true },
+  ];
+
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-4 sm:max-w-5xl">
@@ -35,34 +43,42 @@ const Task = () => {
             </button>
           </div>
           <div className="flex flex-col space-y-3">
-            <h5>Task to do - 4</h5>
-            <div className="flex justify-between items-center p-4 mb-4 bg-yellow-50 text-yellow-700 rounded-lg ">
-              <p className="text-sm font-medium">To study React fundamentals</p>
-              <div className="flex flex-row space-x-2 sm:space-x-4">
-                <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-green-500 rounded-lg p-1.5  inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
-                  <span className="sr-only">Selesai</span>
-                  <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 11.917 9.724 16.5 19 7.5" />
-                  </svg>
-                </button>
-                <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-green-500 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
-                  <span className="sr-only">Hapus</span>
-                  <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      fillRule="evenodd"
-                      d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
+            <h5>Task to do - {tasks.filter((task) => !task.done).length}</h5>
+            {tasks
+              .filter((task) => !task.done)
+              .map((task) => (
+                <div key={task.id} className="flex justify-between items-center p-4 mb-4 bg-gray-100 text-gray-700 rounded-xl ">
+                  <p className="text-sm font-medium">{task.description}</p>
+                  <div className="flex flex-row space-x-2 sm:space-x-4">
+                    <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-green-500 rounded-lg p-1.5  inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
+                      <span className="sr-only">Selesai</span>
+                      <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 11.917 9.724 16.5 19 7.5" />
+                      </svg>
+                    </button>
+                    <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-red-500 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
+                      <span className="sr-only">Hapus</span>
+                      <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          fillRule="evenodd"
+                          d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              ))}
           </div>
           <div className="flex flex-col space-y-3">
-            <h5>Done - 1</h5>
-            <div className="flex justify-between items-center p-4 mb-4 bg-green-50 text-green-700 rounded-lg ">
-              <p className="text-sm font-medium line-through">To study React fundamentals</p>
-            </div>
+            <h5>Done - {tasks.filter((task) => task.done).length}</h5>
+            {tasks
+              .filter((task) => task.done)
+              .map((task) => (
+                <div key={task.id} className="flex justify-between items-center p-4 mb-4 bg-green-50 text-green-700 rounded-xl ">
+                  <p className="text-sm font-medium line-through">{task.description}</p>
+                </div>
+              ))}
           </div>
         </div>
       </div>
