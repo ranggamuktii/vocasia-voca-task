@@ -6,6 +6,9 @@ export default {
       boxShadow: {
         md: '0 0px 6px 0px rgba(0, 0, 0 , 0.1)',
       },
+      scale: {
+        102: '1.02',
+      },
     },
   },
   plugins: [],
