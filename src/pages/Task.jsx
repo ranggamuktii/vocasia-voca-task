@@ -10,7 +10,7 @@ const Task = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-4 sm:max-w-5xl">
+    <div className="grid grid-cols-1 gap-y-4 sm:gap-4 justify-center items-center sm:grid-cols-4 sm:max-w-5xl">
       <div className="bg-white flex flex-col justify-center items-center max-w-xs sm:max-w-md px-6 py-8 sm:px-10 sm:py-10 rounded-[20px] space-y-4 shadow-md">
         <img className="w-24 h-24 sm:w-28 sm:h-28 rounded-full" src="https://placehold.co/400" />
         <h5 className="text-center">
