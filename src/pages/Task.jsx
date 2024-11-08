@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 
 const Task = () => {
+  const name = 'Rangga';
+  const profileUrl = 'https://placehold.co/400';
+
   const tasks = [
     { id: 1, description: 'To study React fundamentals', done: false },
     { id: 2, description: 'Write documentation for API endpoints', done: false },
@@ -12,9 +15,9 @@ const Task = () => {
   return (
     <div className="grid grid-cols-1 gap-y-4 sm:gap-4 justify-center items-center sm:grid-cols-4 sm:max-w-5xl">
       <div className="bg-white flex flex-col justify-center items-center max-w-xs sm:max-w-md px-6 py-8 sm:px-10 sm:py-10 rounded-[20px] space-y-4 shadow-md">
-        <img className="w-24 h-24 sm:w-28 sm:h-28 rounded-full" src="https://placehold.co/400" />
+        <img className="w-24 h-24 sm:w-28 sm:h-28 rounded-full" src={profileUrl} />
         <h5 className="text-center">
-          Welcome Back, <span className="font-semibold">Rangga</span>
+          Welcome Back, <span className="font-semibold">{name}</span>
         </h5>
         <Link to="/UpdateProfile">
           <button className="w-full flex justify-center items-center text-white bg-red-100 hover:bg-red-200 font-medium rounded-xl text-sm px-5 py-2.5 space-x-1 hover:scale-102 transition duration-500">
