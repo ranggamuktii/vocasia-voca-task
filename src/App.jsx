@@ -6,13 +6,15 @@ import UpdateProfile from './pages/UpdateProfile.jsx';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/task" element={<Task />} />
-        <Route path="/updateProfile" element={<UpdateProfile />} />
-      </Routes>
-    </Router>
+    <div className="w-full h-screen flex justify-center items-center">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/task" element={<Task />} />
+          <Route path="/updateProfile" element={<UpdateProfile />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

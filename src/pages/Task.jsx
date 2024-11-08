@@ -56,13 +56,11 @@ const Task = () => {
                 <p className="text-sm font-medium">{task.description}</p>
                 <div className="flex flex-row space-x-2 sm:space-x-4">
                   <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-green-500 rounded-lg p-1.5  inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
-                    <span className="sr-only">Selesai</span>
                     <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 11.917 9.724 16.5 19 7.5" />
                     </svg>
                   </button>
                   <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-red-500 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
-                    <span className="sr-only">Hapus</span>
                     <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="currentColor" viewBox="0 0 24 24">
                       <path
                         fillRule="evenodd"
