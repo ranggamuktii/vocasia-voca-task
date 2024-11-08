@@ -1,20 +1,39 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Task = () => {
   const name = 'Rangga';
-  const profileUrl = 'https://placehold.co/400';
-
-  const tasks = [
+  const profileUrl = '../../public/profile.jpg';
+  const listTasks = [
     { id: 1, description: 'To study React fundamentals', done: false },
     { id: 2, description: 'Write documentation for API endpoints', done: false },
     { id: 3, description: 'Prepare a presentation on project status', done: false },
     { id: 4, description: 'Fix bugs in the authentication module', done: false },
-    { id: 5, description: 'To study React fundamentals', done: true },
+    { id: 5, description: 'Vocasia Fullstack Web Developer', done: false },
   ];
+
+  const [tasks, setTasks] = useState(listTasks);
+  const [newTask, setNewTask] = useState('');
+
+  const handleAddTask = () => {
+    if (newTask.trim()) {
+      const newTaskObject = { id: tasks.length + 1, description: newTask, done: false };
+      setTasks([...tasks, newTaskObject]);
+      setNewTask('');
+    }
+  };
+
+  const toggleTaskStatus = (id) => {
+    setTasks(tasks.map((task) => (task.id === id ? { ...task, done: !task.done } : task)));
+  };
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
 
   return (
     <div className="grid grid-cols-1 gap-y-4 sm:gap-4 justify-center items-center sm:grid-cols-4 sm:max-w-5xl">
-      <div className="bg-white flex flex-col justify-center items-center max-w-xs sm:max-w-md px-6 py-8 sm:px-10 sm:py-10 rounded-[20px] space-y-4 shadow-md">
+      <div className="h-full bg-white flex flex-col justify-center items-center max-w-xs sm:max-w-md px-6 py-8 sm:px-10 sm:py-10 rounded-[20px] space-y-4 shadow-md">
         <img className="w-24 h-24 sm:w-28 sm:h-28 rounded-full" src={profileUrl} />
         <h5 className="text-center">
           Welcome Back, <span className="font-semibold">{name}</span>
@@ -43,8 +62,16 @@ const Task = () => {
       </div>
       <div className="bg-white col-span-3 flex flex-col max-w-xs sm:max-w-5xl px-6 py-8 sm:px-10 sm:py-10 rounded-[20px] space-y-12 shadow-md">
         <div className="flex space-x-2">
-          <input type="text" name="task" id="task" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 " placeholder="Tambahkan tugas baru" required="" />
-          <button className="bg-red-500 px-2 rounded-xl">
+          <input
+            type="text"
+            name="task"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 "
+            placeholder="Tambahkan tugas baru"
+            required=""
+          />
+          <button onClick={handleAddTask} className="bg-red-500 px-2 rounded-xl">
             <svg className="w-6 h-6 text-white hover:scale-110 transition duration-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="currentColor" viewBox="0 0 24 24">
               <path fillRule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clipRule="evenodd" />
             </svg>
@@ -58,12 +85,24 @@ const Task = () => {
               <div key={task.id} className="flex justify-between items-center p-4 mb-4 bg-gray-100 text-gray-700 rounded-xl ">
                 <p className="text-sm font-medium">{task.description}</p>
                 <div className="flex flex-row space-x-2 sm:space-x-4">
-                  <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-green-500 rounded-lg p-1.5  inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
+                  <button
+                    onClick={() => toggleTaskStatus(task.id)}
+                    type="button"
+                    className="ms-auto -mx-1.5 -my-1.5  text-green-500 rounded-lg p-1.5  inline-flex items-center justify-center h-8 w-8"
+                    data-dismiss-target="#alert-1"
+                    aria-label="Close"
+                  >
                     <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 11.917 9.724 16.5 19 7.5" />
                     </svg>
                   </button>
-                  <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-red-500 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
+                  <button
+                    onClick={() => deleteTask(task.id)}
+                    type="button"
+                    className="ms-auto -mx-1.5 -my-1.5  text-red-500 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8"
+                    data-dismiss-target="#alert-1"
+                    aria-label="Close"
+                  >
                     <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="currentColor" viewBox="0 0 24 24">
                       <path
                         fillRule="evenodd"
