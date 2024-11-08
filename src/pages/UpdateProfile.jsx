@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
 const UpdateProfile = () => {
+  const profileUrl = '../../public/profile.jpg';
+
   return (
     <div className="bg-white w-full sm:max-w-sm md:max-w-md px-6 py-8 sm:px-6 sm:py-8 rounded-[30px] shadow-0 sm:shadow-md space-y-5">
       <Link to="/task" className="flex font-medium cursor-pointer hover:scale-102 transition duration-500">
@@ -10,7 +12,7 @@ const UpdateProfile = () => {
         <p>Edit Profile</p>
       </Link>
       <div className="flex flex-col justify-center items-center px-2 sm:px-2">
-        <img className="w-24 h-24 sm:w-28 sm:h-28 rounded-full" src="https://placehold.co/400" />
+        <img className="w-24 h-24 sm:w-28 sm:h-28 rounded-full" src={profileUrl} />
         <form className="w-full space-y-6 sm:p-2 md:p-4 mt-5 sm:mt-2" action="#">
           <div>
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
