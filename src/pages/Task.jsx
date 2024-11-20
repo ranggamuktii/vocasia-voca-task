@@ -70,6 +70,19 @@ const Task = () => {
     }
   };
 
+  const deleteTask = async (id) => {
+    try {
+      const response = await fetch(BASE_URL + `/tasks/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) throw new Error('Failed to delete task');
+      setTasks(tasks.filter((task) => task._id !== id));
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -147,7 +160,13 @@ const Task = () => {
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 11.917 9.724 16.5 19 7.5" />
                       </svg>
                     </button>
-                    <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-red-500 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
+                    <button
+                      onClick={() => deleteTask(task._id)}
+                      type="button"
+                      className="ms-auto -mx-1.5 -my-1.5  text-red-500 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8"
+                      data-dismiss-target="#alert-1"
+                      aria-label="Close"
+                    >
                       <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="currentColor" viewBox="0 0 24 24">
                         <path
                           fillRule="evenodd"
