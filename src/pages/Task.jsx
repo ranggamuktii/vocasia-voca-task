@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import BASE_URL from '../config';
 
 const Task = () => {
@@ -15,7 +16,7 @@ const Task = () => {
 
   if (!token) {
     console.warn('No token found, redirecting to login...');
-    navigate('/login');
+    navigate('/');
   }
 
   const fetchTasks = async () => {
@@ -83,9 +84,22 @@ const Task = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    Cookies.remove('rememberedToken');
+
+    navigate('/');
+  };
+
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    if (!token) {
+      navigate('/');
+    } else {
+      fetchTasks(token);
+    }
+  }, [navigate]);
 
   return (
     <div className="grid grid-cols-1 gap-y-4 sm:gap-4 justify-center items-center sm:grid-cols-4 sm:max-w-5xl">
@@ -106,14 +120,7 @@ const Task = () => {
             <p className="text-red-600 font-medium">Edit Profile</p>
           </button>
         </Link>
-        <button
-          onClick={() => {
-            localStorage.removeItem('token');
-            sessionStorage.removeItem('token');
-            navigate('/');
-          }}
-          className="w-full flex justify-center items-center text-white bg-red-500 hover:bg-red-600 font-medium rounded-xl text-sm px-5 py-2.5 space-x-1 hover:scale-102 transition duration-500"
-        >
+        <button onClick={handleLogout} className="w-full flex justify-center items-center text-white bg-red-500 hover:bg-red-600 font-medium rounded-xl text-sm px-5 py-2.5 space-x-1 hover:scale-102 transition duration-500">
           <svg className="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="currentColor" viewBox="0 0 24 24">
             <path d="M14 19V5h4a1 1 0 0 1 1 1v11h1a1 1 0 0 1 0 2h-6Z" />
             <path fillRule="evenodd" d="M12 4.571a1 1 0 0 0-1.275-.961l-5 1.428A1 1 0 0 0 5 6v11H4a1 1 0 0 0 0 2h1.86l4.865 1.39A1 1 0 0 0 12 19.43V4.57ZM10 11a1 1 0 0 1 1 1v.5a1 1 0 0 1-2 0V12a1 1 0 0 1 1-1Z" clipRule="evenodd" />
