@@ -14,6 +14,7 @@ const Login = () => {
   useEffect(() => {
     const token = Cookies.get('rememberedToken');
     const rememberedEmail = Cookies.get('rememberedEmail');
+    const rememberedPassword = Cookies.get('rememberedPassword');
 
     if (token) {
       navigate('/task');
@@ -22,6 +23,11 @@ const Login = () => {
     if (rememberedEmail) {
       setEmail(rememberedEmail);
       setRememberMe(true);
+    }
+
+    if (rememberedPassword) {
+      setPassword(rememberedPassword);
+      setShowPassword(true);
     }
   }, [navigate]);
 
@@ -42,6 +48,7 @@ const Login = () => {
 
         if (rememberMe) {
           Cookies.set('rememberedEmail', email, { expires: 30 });
+          Cookies.set('rememberedPassword', password, { expires: 30 });
         }
 
         rememberMe ? localStorage.setItem('token', token) : sessionStorage.setItem('token', token);
