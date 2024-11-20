@@ -4,12 +4,10 @@ import Cookies from 'js-cookie';
 import BASE_URL from '../config';
 
 const Task = () => {
-  const name = 'Rangga';
-  const profileUrl = '../../public/profile.jpg';
-
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState({});
   const navigate = useNavigate();
 
   const token = localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -18,6 +16,29 @@ const Task = () => {
     console.warn('No token found, redirecting to login...');
     navigate('/');
   }
+
+  const fetchUserData = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(BASE_URL + `/users/profile`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!response.ok) {
+        handleLogout();
+        throw new Error('Failed to fetch user profile');
+      }
+
+      const data = await response.json();
+      setUser(data.data);
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      navigate('/');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchTasks = async () => {
     try {
@@ -97,6 +118,7 @@ const Task = () => {
     if (!token) {
       navigate('/');
     } else {
+      fetchUserData(token);
       fetchTasks(token);
     }
   }, [navigate]);
@@ -104,9 +126,9 @@ const Task = () => {
   return (
     <div className="grid grid-cols-1 gap-y-4 sm:gap-4 justify-center items-center sm:grid-cols-4 sm:max-w-5xl">
       <div className="h-full bg-white flex flex-col justify-center items-center max-w-xs sm:max-w-md px-6 py-8 sm:px-10 sm:py-10 rounded-[20px] space-y-4 shadow-md">
-        <img className="w-24 h-24 sm:w-28 sm:h-28 rounded-full" src={profileUrl} />
+        <img className="w-24 h-24 sm:w-28 sm:h-28 rounded-full" src={user?.photo_url} />
         <h5 className="text-center">
-          Welcome Back, <span className="font-semibold">{name}</span>
+          Welcome Back, <span className="font-semibold">{user?.name}</span>
         </h5>
         <Link to="/UpdateProfile">
           <button className="w-full flex justify-center items-center text-white bg-red-100 hover:bg-red-200 font-medium rounded-xl text-sm px-5 py-2.5 space-x-1 hover:scale-102 transition duration-500">
