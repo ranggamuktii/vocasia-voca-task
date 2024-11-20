@@ -1,8 +1,37 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../config';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(BASE_URL + '/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('token', data.token);
+        navigate('/task');
+      } else {
+        setError(data.message || 'Login gagal, silakan coba lagi.');
+      }
+    } catch (error) {
+      setError('Terjadi kesalahan, coba lagi.');
+      console.error('Login error:', error);
+    }
+  };
 
   return (
     <div className="bg-white max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg px-6 py-8 sm:p-4 rounded-[30px] shadow-md">
@@ -16,7 +45,7 @@ const Login = () => {
           <p className="text-xs sm:text-sm font-normal text-gray-600 hover:scale-105 transition duration-500">Aplikasi Todo Task yang praktis dan efisien, siap membantu mengelola semua tugas dan kebutuhanmu kapan pun.</p>
         </div>
       </div>
-      <form className="space-y-6 sm:p-2 md:p-4 mt-5 sm:mt-2" action="#">
+      <form onSubmit={handleSubmit} className="space-y-6 sm:p-2 md:p-4 mt-5 sm:mt-2" action="#">
         <div>
           <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
             Masukkan Email
@@ -25,10 +54,13 @@ const Login = () => {
             type="email"
             name="email"
             id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             placeholder="Masukkan email anda"
             required=""
           />
+          {error && <p className="text-red-500 text-sm">{error}</p>}
         </div>
         <div>
           <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
@@ -39,6 +71,8 @@ const Login = () => {
               type={showPassword ? 'text' : 'password'}
               name="password"
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Masukkan password anda"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               required=""
@@ -62,6 +96,7 @@ const Login = () => {
               <span className="sr-only">{showPassword ? 'Hide' : 'Show'} password</span>
             </button>
           </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
         </div>
         <div className="flex items-start">
           <div className="flex items-start">
@@ -82,11 +117,10 @@ const Login = () => {
             Lost Password?
           </a>
         </div>
-        <Link to="/task">
-          <button type="submit" className="w-full text-white bg-red-500 hover:bg-red-700 font-medium rounded-xl text-sm px-5 py-2.5 text-center mt-4">
-            Masuk
-          </button>
-        </Link>
+        <button type="submit" className="w-full text-white bg-red-500 hover:bg-red-700 font-medium rounded-xl text-sm px-5 py-2.5 text-center mt-4">
+          Masuk
+        </button>
+        {/* <Link to="/task"></Link> */}
         <div className="text-sm font-medium text-gray-400 text-center">
           Belum punya akun?{' '}
           <a href="#" className="text-blue-700 hover:underline dark:text-blue-500">
