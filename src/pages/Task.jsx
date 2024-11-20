@@ -56,6 +56,20 @@ const Task = () => {
     }
   };
 
+  const toggleTaskStatus = async (id) => {
+    try {
+      const response = await fetch(BASE_URL + `/tasks/${id}/done`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) throw new Error('Failed to update task status');
+      const updatedTask = await response.json();
+      setTasks(tasks.map((task) => (task._id === id ? updatedTask.data : task)));
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -122,7 +136,13 @@ const Task = () => {
                 <div key={task._id} className="flex justify-between items-center p-4 mb-4 bg-gray-100 text-gray-700 rounded-xl ">
                   <p className="text-sm font-medium">{task.title}</p>
                   <div className="flex flex-row space-x-2 sm:space-x-4">
-                    <button type="button" className="ms-auto -mx-1.5 -my-1.5  text-green-500 rounded-lg p-1.5  inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
+                    <button
+                      onClick={() => toggleTaskStatus(task._id)}
+                      type="button"
+                      className="ms-auto -mx-1.5 -my-1.5  text-green-500 rounded-lg p-1.5  inline-flex items-center justify-center h-8 w-8"
+                      data-dismiss-target="#alert-1"
+                      aria-label="Close"
+                    >
                       <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 11.917 9.724 16.5 19 7.5" />
                       </svg>
